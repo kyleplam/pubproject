@@ -126,11 +126,11 @@ typical_births
 
 # Births From Older Mothers (35 years old or older)
 
-mean_typical is the average amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
+mean_old is the average amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
 
-median_typical is the median amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
+median_old is the median amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
 
-sum_typical is the total of in-hospital births from mothers ages 35 and older in California in 2008.
+sum_old is the total of in-hospital births from mothers ages 35 and older in California in 2008.
 ```{r}
 old_births <- hospital_births_raw %>% filter(Age_Group == "Older Mothers (35 years old or older)") %>% summarize(
   mean_old = mean(Count), 
@@ -139,10 +139,11 @@ old_births <- hospital_births_raw %>% filter(Age_Group == "Older Mothers (35 yea
 old_births
 ```
 
+\newpage
 # Bar Chart
 
 The bar chart shows that the majority of in-hospital births are by mothers of age 20-35 years old. Older mothers older than 35 years old have more in-hospital births than teen mothers. Tying back to our question, mothers of age 20-35 years are more likely to be interested in family planning compared to other age groups, giving the most (a significant amount of) in-hospital births in our dataset. 
-
+  
 ```{r bar-chart-region, fig.width = 10}
 births_ages_only <- hospital_births_raw %>% filter(Age_Group != "Total Births") 
 births_ages_only$Age_Group <- forcats::fct_relevel(births_ages_only$Age_Group, 
