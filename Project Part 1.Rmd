@@ -1,0 +1,156 @@
+---
+title: "Project Part 1"
+author: "Kyle Lam and Saphia Nguyen"
+date: "7/14/2020"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-libraries}
+library(formatR)
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+\newpage
+# Problem 1:
+## What is the problem you are addresing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
+
+The purpose of this report is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008. We are interested in seeing the differences between the in-hospital births by the different age groups. This is a descriptive type question in terms of the PPDAC framework.
+
+\newpage
+# Problem 2:
+## What is the target population for your project? Why was this target chosen ie what was your rationale for wanting to answer this question in this specific population?
+
+The target population are Californian mothers who have given birth in 2008. This target was chosen because we are interested in women who have given birth in 2008 using hospital facilities. We are interested in family planning by those of different age groups in California. For example, it is more common for younger women who are currently in high-school, college, or without a stable income to not be planning to start a family, compared to those typically aged women who are currently stable within their careers, relationships, and life. 
+
+
+
+\newpage
+# Problem 3:  
+## What is the sampling frame used to collect the data you are using. Describe why you think this sampling strategy is appropriate for your question. To what group(s) would you feel comfortable generalizing the findings of your study and why.
+
+The sampling frame used to collect the data we are using is MIRCal, the Medical Information Reporting System of California, which is run by the Office of Statewide Health Planning and Development. Medical facilities in California submit their data to MIRCal. This sampling strategy is appropriate to our problem because we believe all age groups would utilize a hospital to give birth. The groups we feel comfortable generalizing the findings of our study is all Californian women, because less women are inclined to have a family at a younger age rather than women who are older. We can use the relative amounts of births to see which groups are more intrested in family planning/having children than others.
+
+\newpage
+# Problem 4:  
+## Write a brief description (1-4 sentences) of the source and contents of your dataset. Provide a URL to the original data source if applicable. If not (e.g., the data came from your internship), provide 1-2 sentences saying where the data came from. If you completed a web form to access the data and selected a subset, describe these steps (including any options you selected) and the date you accessed the data.
+
+Our dataset comes from California's Office of Statewide Health Planning and Development (OSHPD). OSHPD collects their data using MIRCal, the Medical Information Reporting System of California, which medical facilities submit their data, information, and records. The content of the dataset contains counts of in-hospital births by mother’s age groups (i.e., teen mothers, typical aged mothers and older mothers) based on the mother’s county of residence and year. This dataset does not include all births in California; only those births that occurred in a hospital.
+
+[URL] (https://data.chhs.ca.gov/dataset/inhospitalbirthsbymothersagegroup)
+
+\newpage
+# Problem 5:  
+## Write code below to import your data into R. Assign your dataset to an object.
+
+```{r read-in-the-data}
+hospital_births_raw <- read_csv("inhospitalbirthsbyagegroup.csv") %>% rename(Year = year,
+                                                                             County = patcnty,
+                                                                             Age_Group = agegrp,
+                                                                             Count = count)
+```
+
+\newpage
+# Problem 6:  
+## Use code in R to answer the following questions:
+
+## i) What are the dimensions of the dataset?
+```{r dimensions of dataset}
+dim(hospital_births_raw)
+```
+## ii) Provide a list of variable names.
+```{r variable names}
+names(hospital_births_raw)
+```
+## iii) Print the first six rows of the dataset.
+```{r first six rows of the dataset}
+head(hospital_births_raw)
+```
+
+\newpage
+# Problem 7:
+## Use the data to demonstrate a statistical concept from Part I of the course. Describe the concept that you are demonstrating and interpret the findings. This should be a combination of code and written explanation.
+
+We will be collecting the total amount of in-hospital births for each age group and for the combined age groups. We will also be collecting the mean and median of the count of in-hospital births in each age group and combined age groups per county. The age groups include Teen Mothers, Typical Aged Mothers, Older Mothers. 
+
+# Total Births (includes all age groups)
+
+mean_total is the average amount of in-hospital births in California per county in 2008.
+
+median_total is the median amount of in-hospital births in California per county in 2008.
+
+sum_total is the total of in-hospital births in California in 2008.
+```{r}
+total_births <- hospital_births_raw %>% filter(Age_Group == "Total Births") %>% summarize(
+  mean_total = mean(Count),
+  median_total = median(Count), 
+  sum_total = sum(Count))
+total_births
+```
+
+# Births From Teen Mothers (15-19 years old)
+
+mean_teen is the average amount of in-hospital births from teen mothers in California per county in 2008.
+
+median_teen is the median amount of in-hospital births from teen mothers in California per county in 2008.
+
+sum_teen is the total of in-hospital births from teen mothers in California in 2008.
+```{r}
+teen_births <- hospital_births_raw %>% filter(Age_Group == 
+            "Teen Mothers (15 years old to 19 years old)") %>% summarize(
+              mean_teen = mean(Count),
+              median_teen = median(Count), 
+              sum_teen = sum(Count))
+teen_births
+```
+
+# Births From Typical Aged Mothers (20-34 years old)
+
+mean_typical is the average amount of in-hospital births from mothers 20-34 years old in California per county in 2008.
+
+median_typical is the median amount of in-hospital births from mothers 20-34 years old in California per county in 2008
+
+sum_typical is the total of in-hospital births from mothers 20-34 years old in California in 2008.
+```{r}
+typical_births <- hospital_births_raw %>% filter(Age_Group == 
+    "Typical Aged Mothers (20 years old to 34 years old)") %>% summarize(
+      mean_typical = mean(Count), 
+      median_typical = median(Count), 
+      sum_typical = sum(Count))
+typical_births
+```
+
+# Births From Older Mothers (35 years old or older)
+
+mean_typical is the average amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
+
+median_typical is the median amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
+
+sum_typical is the total of in-hospital births from mothers ages 35 and older in California in 2008.
+```{r}
+old_births <- hospital_births_raw %>% filter(Age_Group == "Older Mothers (35 years old or older)") %>% summarize(
+  mean_old = mean(Count), 
+  median_old = median(Count), 
+  sum_old = sum(Count))
+old_births
+```
+
+# Bar Chart
+
+The bar chart shows how
+```{r bar-chart-region, fig.width = 10}
+births_ages_only <- hospital_births_raw %>% filter(Age_Group != "Total Births") 
+births_ages_only$Age_Group <- forcats::fct_relevel(births_ages_only$Age_Group, 
+                          "Teen Mothers (15 years old to 19 years old)", 
+                          "Typical Aged Mothers (20 years old to 34 years old)", 
+                          "Older Mothers (35 years old or older)")
+sum_barchart <- ggplot(births_ages_only, aes(x = Age_Group, y = Count)) + 
+  geom_bar(stat = "identity", fill = "darkblue") + 
+  labs(title = "Bar Chart of Count of In-Hospital Births by Age Group in 2008, California", 
+       x = "Age Group", y = "Count") + theme_minimal(base_size = 10)
+sum_barchart
+```
