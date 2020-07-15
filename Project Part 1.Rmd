@@ -19,13 +19,13 @@ library(ggplot2)
 # Problem 1:
 ## What is the problem you are addresing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
 
-The purpose of this report is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008. We are interested in seeing the differences between the in-hospital births by the different age groups. This is a descriptive type question in terms of the PPDAC framework.
+The purpose of this report is to understand intentions of family planning among women of different age groups in California. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008 and compare the amount of in-hospital births by the different age groups.
 
 \newpage
 # Problem 2:
 ## What is the target population for your project? Why was this target chosen ie what was your rationale for wanting to answer this question in this specific population?
 
-The target population are Californian mothers who have given birth in 2008. This target was chosen because we are interested in women who have given birth in 2008 using hospital facilities. We are interested in family planning by those of different age groups in California. For example, it is more common for younger women who are currently in high-school, college, or without a stable income to not be planning to start a family, compared to those typically aged women who are currently stable within their careers, relationships, and life. 
+The target population are Californian mothers who have given birth in 2008. This target was chosen because we are interested in family planning by those of different age groups in California and women will bear children when they want a family. For example, it is more common for younger women who are currently in high-school, college, or without a stable income to not be planning to start a family, compared to those typically aged women who are currently stable within their careers, relationships, and life. 
 
 
 
@@ -33,7 +33,7 @@ The target population are Californian mothers who have given birth in 2008. This
 # Problem 3:  
 ## What is the sampling frame used to collect the data you are using. Describe why you think this sampling strategy is appropriate for your question. To what group(s) would you feel comfortable generalizing the findings of your study and why.
 
-The sampling frame used to collect the data we are using is MIRCal, the Medical Information Reporting System of California, which is run by the Office of Statewide Health Planning and Development. Medical facilities in California submit their data to MIRCal. This sampling strategy is appropriate to our problem because we believe all age groups would utilize a hospital to give birth. The groups we feel comfortable generalizing the findings of our study is all Californian women, because less women are inclined to have a family at a younger age rather than women who are older. We can use the relative amounts of births to see which groups are more intrested in family planning/having children than others.
+The sampling frame used to collect the data we are using is MIRCal, the Medical Information Reporting System of California, which is run by the Office of Statewide Health Planning and Development. Medical facilities in California submit their data to MIRCal. Our study sample is California women who have given birth in 2008 using hospital facilities. This sampling strategy is appropriate to our problem because we believe all age groups have access to and would be qually likely to utilize a hospital to give birth (in other words, there would be little bias in age for births in hospitals). The groups we feel comfortable generalizing the findings of our study is all Californian women (including those who give birth outside hospitals or not at all) because we can use the relative amounts of births to see which groups are more interested in family planning/having children than others.
 
 \newpage
 # Problem 4:  
@@ -141,7 +141,8 @@ old_births
 
 # Bar Chart
 
-The bar chart shows how
+The bar chart shows that the majority of in-hospital births are by mothers of age 20-35 years old. Older mothers older than 35 years old have more in-hospital births than teen mothers. Tying back to our question, mothers of age 20-35 years are more likely to be interested in family planning compared to other age groups, giving the most (a significant amount of) in-hospital births in our dataset. 
+
 ```{r bar-chart-region, fig.width = 10}
 births_ages_only <- hospital_births_raw %>% filter(Age_Group != "Total Births") 
 births_ages_only$Age_Group <- forcats::fct_relevel(births_ages_only$Age_Group, 
