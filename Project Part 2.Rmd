@@ -26,7 +26,7 @@ library(ggplot2)
 # Problem 1:
 ## What is the problem you are addresing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
 
-The purpose of this report is to understand intentions of family planning among women of different age groups in California. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008 and compare the amount of in-hospital births by the different age groups.
+The purpose of this report is to understand intentions of family planning among women of different age groups in California. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008 and compare the amount of in-hospital births by the different age groups. We are using in-hospital births as a proxy for all births in California in 2008.
 
 \newpage
 # Problem 2:
@@ -172,6 +172,8 @@ sum_barchart
 
 # Problem 2:  
 ## Describe a quantity you will estimate as an outcome in your problem using probability notation. Are you planning to calculate marginal probabilities? Conditional probabilities?
+
+
 
 \newpage
 # Problem 3:
