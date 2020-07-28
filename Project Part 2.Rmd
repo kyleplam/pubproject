@@ -24,15 +24,15 @@ library(ggplot2)
 \end{center}
 
 # Problem 1:
-## What is the problem you are addresing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
+## What is the problem you are addressing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
 
-The purpose of this report is to understand intentions of family planning among women of different age groups in California. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008 and compare the amount of in-hospital births by the different age groups. We are using in-hospital births as a proxy for all births in California in 2008.
+The purpose of this report is to understand intentions of family planning among women of different age groups in California over the time period of 2008 to 2016. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008-2016. We are planning to observe any trends over time between the amount of births from mothers of different age groups between 2008-2016. We are using in-hospital births as a proxy for all births in California in 2008.
 
 \newpage
 # Problem 2:
 ## What is the target population for your project? Why was this target chosen ie what was your rationale for wanting to answer this question in this specific population?
 
-The target population are Californian mothers who have given birth in 2008. This target was chosen because we are interested in family planning by those of different age groups in California and women will bear children when they want a family. For example, it is more common for younger women who are currently in high-school, college, or without a stable income to not be planning to start a family, compared to those typically aged women who are currently stable within their careers, relationships, and life. 
+The target population are Californian mothers who have given birth within the time range of 2008-2016. This target was chosen because we are interested in family planning by those of different age groups in California and women will bear children when they want a family. For example, it is more common for younger women who are currently in high-school, college, or without a stable income to not be planning to start a family, compared to those typically aged women who are currently stable within their careers, relationships, and life. 
 
 
 
@@ -40,7 +40,7 @@ The target population are Californian mothers who have given birth in 2008. This
 # Problem 3:  
 ## What is the sampling frame used to collect the data you are using. Describe why you think this sampling strategy is appropriate for your question. To what group(s) would you feel comfortable generalizing the findings of your study and why.
 
-The sampling frame used to collect the data we are using is MIRCal, the Medical Information Reporting System of California, which is run by the Office of Statewide Health Planning and Development. Medical facilities in California submit their data to MIRCal. Our study sample is California women who have given birth in 2008 using hospital facilities. This sampling strategy is appropriate to our problem because we believe all age groups have access to and would be qually likely to utilize a hospital to give birth (in other words, there would be little bias in age for births in hospitals). The groups we feel comfortable generalizing the findings of our study is all Californian women (including those who give birth outside hospitals or not at all) because we can use the relative amounts of births to see which groups are more interested in family planning/having children than others.
+The sampling frame used to collect the data we are using is MIRCal, the Medical Information Reporting System of California, which is run by the Office of Statewide Health Planning and Development. Medical facilities in California submit their data to MIRCal. Our study sample is California women who have given birth in hospital facilities starting from 2008. This sampling strategy is appropriate to our problem because we believe all age groups have access to and would be equally likely to utilize a hospital to give birth (in other words, there would be little bias in age for births in hospitals). The groups we feel comfortable generalizing the findings of our study is all Californian women (including those who give birth outside hospitals or not at all) because we can use the relative amounts of births to see which groups are more interested in family planning/having children than other and because there is a very small minority who elects to give birth outside of the hospital setting.
 
 \newpage
 # Problem 4:  
@@ -86,11 +86,11 @@ We will be collecting the total amount of in-hospital births for each age group 
 
 # Total Births (includes all age groups)
 
-mean_total is the average amount of in-hospital births in California per county in 2008.
+mean_total is the average amount of in-hospital births in California per county.
 
-median_total is the median amount of in-hospital births in California per county in 2008.
+median_total is the median amount of in-hospital births in California per county.
 
-sum_total is the total of in-hospital births in California in 2008.
+sum_total is the total of in-hospital births in California.
 ```{r}
 total_births <- hospital_births_raw %>% filter(Age_Group == "Total Births") %>% summarize(
   mean_total = mean(Count),
@@ -101,14 +101,14 @@ total_births
 
 # Births From Teen Mothers (15-19 years old)
 
-mean_teen is the average amount of in-hospital births from teen mothers in California per county in 2008.
+mean_teen is the average amount of in-hospital births from teen mothers in California per county.
 
-median_teen is the median amount of in-hospital births from teen mothers in California per county in 2008.
+median_teen is the median amount of in-hospital births from teen mothers in California per county.
 
-sum_teen is the total of in-hospital births from teen mothers in California in 2008.
+sum_teen is the total of in-hospital births from teen mothers in California.
 ```{r}
 teen_births <- hospital_births_raw %>% filter(Age_Group == 
-            "Teen Mothers (15 years old to 19 years old)") %>% summarize(
+            "Teen Mothers (15 years old to 19 years old)")  %>% summarize(
               mean_teen = mean(Count),
               median_teen = median(Count), 
               sum_teen = sum(Count))
@@ -117,11 +117,11 @@ teen_births
 
 # Births From Typical Aged Mothers (20-34 years old)
 
-mean_typical is the average amount of in-hospital births from mothers 20-34 years old in California per county in 2008.
+mean_typical is the average amount of in-hospital births from mothers 20-34 years old in California per county.
 
-median_typical is the median amount of in-hospital births from mothers 20-34 years old in California per county in 2008
+median_typical is the median amount of in-hospital births from mothers 20-34 years old in California per county.
 
-sum_typical is the total of in-hospital births from mothers 20-34 years old in California in 2008.
+sum_typical is the total of in-hospital births from mothers 20-34 years old in California.
 ```{r}
 typical_births <- hospital_births_raw %>% filter(Age_Group == 
     "Typical Aged Mothers (20 years old to 34 years old)") %>% summarize(
@@ -133,13 +133,14 @@ typical_births
 
 # Births From Older Mothers (35 years old or older)
 
-mean_old is the average amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
+mean_old is the average amount of in-hospital births from mothers ages 35 and older in California per county.
 
-median_old is the median amount of in-hospital births from mothers ages 35 and older in California per county in 2008.
+median_old is the median amount of in-hospital births from mothers ages 35 and older in California per county.
 
-sum_old is the total of in-hospital births from mothers ages 35 and older in California in 2008.
+sum_old is the total of in-hospital births from mothers ages 35 and older in California.
 ```{r}
-old_births <- hospital_births_raw %>% filter(Age_Group == "Older Mothers (35 years old or older)") %>% summarize(
+old_births <- hospital_births_raw %>% filter(Age_Group == "Older Mothers (35 years 
+  old or older)") %>% summarize(
   mean_old = mean(Count), 
   median_old = median(Count), 
   sum_old = sum(Count))
@@ -149,19 +150,20 @@ old_births
 \newpage
 # Bar Chart
 
-The bar chart shows that the majority of in-hospital births are by mothers of age 20-35 years old. Older mothers older than 35 years old have more in-hospital births than teen mothers. Tying back to our question, mothers of age 20-35 years are more likely to be interested in family planning compared to other age groups, giving the most (a significant amount of) in-hospital births in our dataset. 
+The bar chart shows that the majority of in-hospital births are from mothers of ages 20-35 years old. This majority is consistent over the observed time period of 2008 to 2016. Tying back to our question, we also see that over time the amount of births from teenage mothers and typical mothers decreases and the amount of births from older mothers remain about the same. We can relate this to intentions in family planning and infer that interests in family planning has decreased slightly over time for teenage mothers and typical age mothers and have remained the same for older age mothers. 
   
 ```{r bar-chart-region, fig.width = 10}
-births_ages_only <- hospital_births_raw %>% filter(Age_Group != "Total Births") 
-births_ages_only$Age_Group <- forcats::fct_relevel(births_ages_only$Age_Group, 
+dodge_all <- hospital_births_raw %>% filter(Age_Group != "Total Births") 
+head(dodge_all)
+dodge_all$Age_Group <- forcats::fct_relevel(dodge_all$Age_Group, 
                           "Teen Mothers (15 years old to 19 years old)", 
                           "Typical Aged Mothers (20 years old to 34 years old)", 
                           "Older Mothers (35 years old or older)")
-sum_barchart <- ggplot(births_ages_only, aes(x = Age_Group, y = Count)) + 
-  geom_bar(stat = "identity", fill = "darkblue") + 
-  labs(title = "Bar Chart of Count of In-Hospital Births by Age Group in 2008, California", 
-       x = "Age Group", y = "Count") + theme_minimal(base_size = 10)
-sum_barchart
+dodge_all_chart <- ggplot(dodge_all,  aes(x = factor(Year), y = Count)) +
+  geom_bar(aes(fill = Age_Group), stat = "identity", position = "dodge") +  
+  labs(title = "Bar Chart of Count of In-Hospital Births by Year and Age Groups 
+  in California 2008-2016", x = "Year", y = "Count of In-Hospital Births") + theme_minimal(base_size = 10)
+dodge_all_chart
 ```
 
 \newpage
@@ -173,21 +175,133 @@ sum_barchart
 # Problem 2:  
 ## Describe a quantity you will estimate as an outcome in your problem using probability notation. Are you planning to calculate marginal probabilities? Conditional probabilities?
 
+We will be estimating the conditional probabilities of each age group given a year. By doing so, we can compare the probabilities of each age group by year and see how these probabilities have changed over time. 
 
+P(Teen Mothers | 2008), P(Typical Aged Mothers | 2008), P(Older Mothers | 2008), P(Teen Mothers | 2009), P(Typical Aged Mothers | 2009), P(Older Mothers | 2009), P(Teen Mothers | 2010), P(Typical Aged Mothers | 2010), P(Older Mothers | 2010), P(Teen Mothers | 2011), P(Typical Aged Mothers | 2011), P(Older Mothers | 2011), P(Teen Mothers | 2012), P(Typical Aged Mothers | 2012), P(Older Mothers | 2012), P(Teen Mothers | 2013), P(Typical Aged Mothers | 2013), P(Older Mothers | 2013), P(Teen Mothers | 2014), P(Typical Aged Mothers | 2014), P(Older Mothers | 2014), P(Teen Mothers | 2015), P(Typical Aged Mothers | 2015), P(Older Mothers | 2015), P(Teen Mothers | 2016), P(Typical Aged Mothers | 2016), P(Older Mothers | 2016)
 
 \newpage
 # Problem 3:
 ## Describe the type of theoretical distribution that is relevant for your data.
 
 ## i) What type of variable are you estimating (continuous, categorical, ordinal, etc)?
+We are estimating a categorical variable. 
 
 ## ii) What theoretical distribution that we have talked about would potentially be appropriate to use with these data (Normal, Binomial, Poisson. . . )?
 
+The theoretical distribution does not apply to our project because we are working with a qualitative variable, not a quantitative variable.
+
 ## iii) Why is this an appropriate model for the data you are studying?
+
+While we have no theoretical distribution, our bar chart from Problem 7 in Part 1 is an appropriate model for the data we are studying as it shows the intersection between the categorical variables.
+
 
 \newpage
 # Problem 4:
 ## Use the data you have to demonstrate a statistical concept from Part II of the course. Describe the concept that you are demonstrating and interpret the findings. This should include code in R, a visual of some kind and text interpretation.
+
+In this demonstration, the statistical concept we will be showing is the conditional probabilities of the age groups given the years 2008 and 2016. We would like to compare these probabilities and to see if there is a difference over time. 
+
+
+First, we will calculate the sum of the total births in 2008, 2016, and for the entire timerange of 2008-2016 (entire dataset). The dataset already contains the Total Births by County in California, which is what we will be using to calculate the total births in 2008, 2016, and for the whole dataset. With these calculations, we can find the marginal probabilities of a birth in 2008 and a birth in 2016. 
+```{r marginal probabilities of year 2008, 2016, and entire dataset}
+total_2008 <- hospital_births_raw %>% filter(Age_Group == "Total Births", Year == "2008"
+  ) %>% summarize(sum_2008 =sum(Count))
+total_2016 <- hospital_births_raw %>% filter(Age_Group == "Total Births", Year == "2016"
+  ) %>% summarize(sum_2016 =sum(Count))
+total_all <- hospital_births_raw %>% filter(Age_Group == "Total Births"
+  ) %>% summarize(sum_all =sum(Count))
+
+
+probability2008 <- total_2008/total_all 
+probability2008 <- probability2008 %>% rename(probability2008 = sum_2008 )
+
+probability2016 <- total_2016/total_all
+probability2016 <- probability2016 %>% rename(probability2016 = sum_2016)
+
+
+c(total_2008, total_2016, total_all, probability2008, probability2016)
+```
+
+Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Teenage Mother giving birth in 2008 or 2016.
+```{r conditional probabilities of Teenage Births given years 2008 and 2016}
+
+#Calculating for total births from Teenage mothers in 2008
+teen_2008 <- hospital_births_raw %>% filter(
+  Age_Group == "Teen Mothers (15 years old to 19 years old)", 
+  Year == "2008") %>% summarize(sum_teen2008 =sum(Count))
+
+
+
+
+#Calculating for total births from Teenage mothers in 2016
+teen_2016 <- hospital_births_raw %>% filter(
+  Age_Group == "Teen Mothers (15 years old to 19 years old)", 
+  Year == "2016") %>% summarize(sum_teen2016 =sum(Count))
+
+#Calculating Conditional Probability of Teenage Mother Giving Birth in 2008
+probability_teen2008 <- teen_2008/total_2008 
+probability_teen2008 <- probability_teen2008 %>% rename(probability_teen2008 = 
+  sum_teen2008)
+
+#Calculating Conditional Probability of Teenage Mother Giving Birth in 2016
+probability_teen2016 <- teen_2016/total_2016
+probability_teen2016 <- probability_teen2016 %>% rename(probability_teen2016 = 
+  sum_teen2016)
+
+c(teen_2008, teen_2016, probability_teen2008, probability_teen2016)
+
+```
+
+Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Typical Aged Mother giving birth in 2008 or 2016.
+```{r conditional probabilities of Typical Aged Births given years 2008 and 2016}
+
+#Calculating for total births from typical aged mothers in 2008
+typical_2008 <- hospital_births_raw %>% filter(
+  Age_Group == "Typical Aged Mothers (20 years old to 34 years old)", 
+  Year == "2008") %>% summarize(sum_typical2008 =sum(Count))
+
+#Calculating for total births from typical aged mothers in 2008
+typical_2016 <- hospital_births_raw %>% filter(
+  Age_Group == "Typical Aged Mothers (20 years old to 34 years old)", 
+  Year == "2016") %>% summarize(sum_typical2016 =sum(Count))
+
+#Calculating Conditional Probability of Typical Age Mother Giving Birth in 2008
+probability_typical2008 <- typical_2008/total_2008 
+probability_typical2008 <- probability_typical2008 %>% rename(probability_typical2008 
+  = sum_typical2008)
+
+#Calculating Conditional Probability of Typical Age Mother Giving Birth in 2016
+probability_typical2016 <- typical_2016/total_2016
+probability_typical2016 <- probability_typical2016 %>% rename(probability_typical2016
+  = sum_typical2016)
+
+c(typical_2008, typical_2016, probability_typical2008, probability_typical2016)
+
+```
+
+Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Older Mothers giving birth in 2008 or 2016.
+```{r conditional probabilities of births from Older Births given years 2008 and 2016}
+
+#Calculating for total births from older mothers in 2008
+old_2008 <- hospital_births_raw %>% filter(
+  Age_Group == "Older Mothers (35 years old or older)", 
+  Year == "2008") %>% summarize(sum_old2008 =sum(Count))
+
+#Calculating for total births from older mothers in 2016
+old_2016 <- hospital_births_raw %>% filter(
+  Age_Group == "Older Mothers (35 years old or older)", 
+  Year == "2016") %>% summarize(sum_old2016 =sum(Count))
+
+#Calculating Conditional Probability of Older Mothers Giving Birth in 2008
+probability_old2008 <- old_2008/total_2008
+probability_old2008 <- probability_old2008 %>% rename(probability_old2008 = sum_old2008 )
+
+#Calculating Conditional Probability of Older Mothers Giving Birth in 2016
+probability_old2016 <- old_2016/total_2016
+probability_old2016 <- probability_old2016 %>% rename(probability_old2016 = sum_old2016)
+
+c(old_2008, old_2016, probability_old2008, probability_old2016)
+```
 
 
 
