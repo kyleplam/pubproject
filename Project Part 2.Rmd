@@ -15,7 +15,14 @@ library(dplyr)
 library(ggplot2)
 ```
 
+
 \newpage
+
+\begin{center}
+{\Large 
+ \textbf{Part 1}}
+\end{center}
+
 # Problem 1:
 ## What is the problem you are addresing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
 
@@ -156,3 +163,30 @@ sum_barchart <- ggplot(births_ages_only, aes(x = Age_Group, y = Count)) +
        x = "Age Group", y = "Count") + theme_minimal(base_size = 10)
 sum_barchart
 ```
+
+\newpage
+\begin{center}
+{\Large 
+ \textbf{Part 2}}
+\end{center}
+
+# Problem 2:  
+## Describe a quantity you will estimate as an outcome in your problem using probability notation. Are you planning to calculate marginal probabilities? Conditional probabilities?
+
+\newpage
+# Problem 3:
+## Describe the type of theoretical distribution that is relevant for your data.
+
+## i) What type of variable are you estimating (continuous, categorical, ordinal, etc)?
+
+## ii) What theoretical distribution that we have talked about would potentially be appropriate to use with these data (Normal, Binomial, Poisson. . . )?
+
+## iii) Why is this an appropriate model for the data you are studying?
+
+\newpage
+# Problem 4:
+## Use the data you have to demonstrate a statistical concept from Part II of the course. Describe the concept that you are demonstrating and interpret the findings. This should include code in R, a visual of some kind and text interpretation.
+
+
+
+
