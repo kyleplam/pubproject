@@ -26,7 +26,7 @@ library(ggplot2)
 # Problem 1:
 ## What is the problem you are addressing with these data? State the question you are trying to answer and let us know what type of question this is in terms of the PPDAC framework?
 
-The purpose of this report is to understand intentions of family planning among women of different age groups in California over the time period of 2008 to 2016. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008-2016. We are planning to observe any trends over time between the amount of births from mothers of different age groups between 2008-2016. We are using in-hospital births as a proxy for all births in California in 2008.
+The purpose of this report is to understand intentions of family planning among women of different age groups in California over the time period of 2008 to 2016. This is a descriptive type question in terms of the PPDAC framework. Our plan is to visualize the amount of in-hospital births between mothers of different age groups in California during 2008-2016. We are planning to observe any trends over time between the amount of births from mothers of different age groups between 2008-2016. We are using in-hospital births as a proxy for all births in California in 2008-2016 .
 
 \newpage
 # Problem 2:
@@ -139,8 +139,8 @@ median_old is the median amount of in-hospital births from mothers ages 35 and o
 
 sum_old is the total of in-hospital births from mothers ages 35 and older in California.
 ```{r}
-old_births <- hospital_births_raw %>% filter(Age_Group == "Older Mothers (35 years 
-  old or older)") %>% summarize(
+old_births <- hospital_births_raw %>% filter(
+  Age_Group == "Older Mothers (35 years old or older)") %>% summarize(
   mean_old = mean(Count), 
   median_old = median(Count), 
   sum_old = sum(Count))
@@ -166,6 +166,18 @@ dodge_all_chart <- ggplot(dodge_all,  aes(x = factor(Year), y = Count)) +
 dodge_all_chart
 ```
 
+```{r average births from teen mothers across 8 years}
+all_teens <- hospital_births_raw %>% filter(Age_Group == "Teen Mothers (15 years old to 19 years old)") %>% summarize(mean_teens = mean(Count))
+round(all_teens, 0)
+
+```
+
+```{r average births from typicalmothers and old mother across 8 years}
+not_teens <- hospital_births_raw %>% filter(Age_Group != "Teen Mothers (15 years old to 19 years old)") %>% filter(Age_Group != "Total Births") %>% summarize(not_teens = mean(Count))
+round(not_teens, 0)
+
+```
+
 \newpage
 \begin{center}
 {\Large 
@@ -177,6 +189,7 @@ dodge_all_chart
 
 We will be estimating the conditional probabilities of each age group given a year. By doing so, we can compare the probabilities of each age group by year and see how these probabilities have changed over time. 
 
+Conditional Probabilities We Will Estimate:
 P(Teen Mothers | 2008), P(Typical Aged Mothers | 2008), P(Older Mothers | 2008), P(Teen Mothers | 2009), P(Typical Aged Mothers | 2009), P(Older Mothers | 2009), P(Teen Mothers | 2010), P(Typical Aged Mothers | 2010), P(Older Mothers | 2010), P(Teen Mothers | 2011), P(Typical Aged Mothers | 2011), P(Older Mothers | 2011), P(Teen Mothers | 2012), P(Typical Aged Mothers | 2012), P(Older Mothers | 2012), P(Teen Mothers | 2013), P(Typical Aged Mothers | 2013), P(Older Mothers | 2013), P(Teen Mothers | 2014), P(Typical Aged Mothers | 2014), P(Older Mothers | 2014), P(Teen Mothers | 2015), P(Typical Aged Mothers | 2015), P(Older Mothers | 2015), P(Teen Mothers | 2016), P(Typical Aged Mothers | 2016), P(Older Mothers | 2016)
 
 \newpage
@@ -184,22 +197,22 @@ P(Teen Mothers | 2008), P(Typical Aged Mothers | 2008), P(Older Mothers | 2008),
 ## Describe the type of theoretical distribution that is relevant for your data.
 
 ## i) What type of variable are you estimating (continuous, categorical, ordinal, etc)?
-We are estimating a categorical variable. 
+The type of variable we are estimating is a discrete variable.
 
 ## ii) What theoretical distribution that we have talked about would potentially be appropriate to use with these data (Normal, Binomial, Poisson. . . )?
 
-The theoretical distribution does not apply to our project because we are working with a qualitative variable, not a quantitative variable.
+The theoretical distribution that works best with our data is Binomial.
 
 ## iii) Why is this an appropriate model for the data you are studying?
 
-While we have no theoretical distribution, our bar chart from Problem 7 in Part 1 is an appropriate model for the data we are studying as it shows the intersection between the categorical variables.
+This is an appropriate model for the data we are studying as we are comparing whether a birth was from a teenage mother or a mother who is not a teen.
 
 
 \newpage
 # Problem 4:
 ## Use the data you have to demonstrate a statistical concept from Part II of the course. Describe the concept that you are demonstrating and interpret the findings. This should include code in R, a visual of some kind and text interpretation.
 
-In this demonstration, the statistical concept we will be showing is the conditional probabilities of the age groups given the years 2008 and 2016. We would like to compare these probabilities and to see if there is a difference over time. 
+In this demonstration, the statistical concept we will be showing is the conditional probabilities of the age groups given the years 2008 and 2016. We would like to compare these probabilities and to see if there is a difference over time. We also calculate the joint probability of a year and age group (just for 2008 and 2016).
 
 
 First, we will calculate the sum of the total births in 2008, 2016, and for the entire timerange of 2008-2016 (entire dataset). The dataset already contains the Total Births by County in California, which is what we will be using to calculate the total births in 2008, 2016, and for the whole dataset. With these calculations, we can find the marginal probabilities of a birth in 2008 and a birth in 2016. 
@@ -222,7 +235,7 @@ probability2016 <- probability2016 %>% rename(probability2016 = sum_2016)
 c(total_2008, total_2016, total_all, probability2008, probability2016)
 ```
 
-Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Teenage Mother giving birth in 2008 or 2016.
+Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Teenage Mother giving birth GIVEN 2008 or 2016. We also find the joint probability of a teenage mother giving birth in 2008 or 2016.
 ```{r conditional probabilities of Teenage Births given years 2008 and 2016}
 
 #Calculating for total births from Teenage mothers in 2008
@@ -230,29 +243,31 @@ teen_2008 <- hospital_births_raw %>% filter(
   Age_Group == "Teen Mothers (15 years old to 19 years old)", 
   Year == "2008") %>% summarize(sum_teen2008 =sum(Count))
 
-
-
-
 #Calculating for total births from Teenage mothers in 2016
 teen_2016 <- hospital_births_raw %>% filter(
   Age_Group == "Teen Mothers (15 years old to 19 years old)", 
   Year == "2016") %>% summarize(sum_teen2016 =sum(Count))
 
-#Calculating Conditional Probability of Teenage Mother Giving Birth in 2008
+#Calculating Conditional Probability of Teenage Mother Giving Birth given 2008
 probability_teen2008 <- teen_2008/total_2008 
 probability_teen2008 <- probability_teen2008 %>% rename(probability_teen2008 = 
   sum_teen2008)
 
-#Calculating Conditional Probability of Teenage Mother Giving Birth in 2016
+#Calculating Conditional Probability of Teenage Mother Giving Birth given 2016
 probability_teen2016 <- teen_2016/total_2016
 probability_teen2016 <- probability_teen2016 %>% rename(probability_teen2016 = 
   sum_teen2016)
 
-c(teen_2008, teen_2016, probability_teen2008, probability_teen2016)
+#Calculating Joint Probability of Year and Age Group Teen Mothers
+# formula: P(A and B) = P(A) * P(B|A)
+joint_teen_2008 <- probability_teen2008 * probability2008
+joint_teen_2016 <- probability_teen2016 * probability2016
+c(teen_2008, teen_2016, probability_teen2008, probability_teen2016
+  , joint_teen_2008, joint_teen_2016)
 
 ```
 
-Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Typical Aged Mother giving birth in 2008 or 2016.
+Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Typical Aged Mother giving birth GIVEN 2008 or 2016. We also find the joint probability of a typical aged mother giving birth in 2008 or 2016.
 ```{r conditional probabilities of Typical Aged Births given years 2008 and 2016}
 
 #Calculating for total births from typical aged mothers in 2008
@@ -265,21 +280,27 @@ typical_2016 <- hospital_births_raw %>% filter(
   Age_Group == "Typical Aged Mothers (20 years old to 34 years old)", 
   Year == "2016") %>% summarize(sum_typical2016 =sum(Count))
 
-#Calculating Conditional Probability of Typical Age Mother Giving Birth in 2008
+#Calculating Conditional Probability of Typical Age Mother Giving Birth given 2008
 probability_typical2008 <- typical_2008/total_2008 
 probability_typical2008 <- probability_typical2008 %>% rename(probability_typical2008 
   = sum_typical2008)
 
-#Calculating Conditional Probability of Typical Age Mother Giving Birth in 2016
+#Calculating Conditional Probability of Typical Age Mother Giving Birth given 2016
 probability_typical2016 <- typical_2016/total_2016
 probability_typical2016 <- probability_typical2016 %>% rename(probability_typical2016
   = sum_typical2016)
 
-c(typical_2008, typical_2016, probability_typical2008, probability_typical2016)
+#Calculating Joint Probability of Year and Age Group Teen Mothers
+# formula: P(A and B) = P(A) * P(B|A)
+joint_typ_2008 <- probability_typical2008 * probability2008
+joint_typ_2016 <- probability_typical2016 * probability2016
+
+c(typical_2008, typical_2016, probability_typical2008, probability_typical2016,
+  joint_typ_2008, joint_typ_2016)
 
 ```
 
-Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Older Mothers giving birth in 2008 or 2016.
+Using the total births of 2008 and 2016 calculated from the marginal probabilities, we find the conditional probability of a Older Mother giving birth GIVEN 2008 or 2016. We also find the joint probability of an older mother giving birth in 2008 or 2016.
 ```{r conditional probabilities of births from Older Births given years 2008 and 2016}
 
 #Calculating for total births from older mothers in 2008
@@ -292,17 +313,26 @@ old_2016 <- hospital_births_raw %>% filter(
   Age_Group == "Older Mothers (35 years old or older)", 
   Year == "2016") %>% summarize(sum_old2016 =sum(Count))
 
-#Calculating Conditional Probability of Older Mothers Giving Birth in 2008
+#Calculating Conditional Probability of Older Mothers Giving Birth given 2008
 probability_old2008 <- old_2008/total_2008
 probability_old2008 <- probability_old2008 %>% rename(probability_old2008 = sum_old2008 )
 
-#Calculating Conditional Probability of Older Mothers Giving Birth in 2016
+#Calculating Conditional Probability of Older Mothers Giving Birth given 2016
 probability_old2016 <- old_2016/total_2016
 probability_old2016 <- probability_old2016 %>% rename(probability_old2016 = sum_old2016)
 
-c(old_2008, old_2016, probability_old2008, probability_old2016)
+#Calculating Joint Probability of Year and Age Group Teen Mothers
+# formula: P(A and B) = P(A) * P(B|A)
+joint_old_2008 <- probability_old2008 * probability2008
+joint_old_2016 <- probability_old2016 * probability2016
+
+c(old_2008, old_2016, probability_old2008, probability_old2016,
+  joint_old_2008, joint_old_2016)
 ```
 
+Summary of Conditional Probabilites for 2008 and 2016
 
-
-
+|Year|Teen Mothers (15-19)|Typical Mothers (20-34)|Older Mothers (35+)| Total |
+|----|--------------------|-----------------------|-------------------|-------|
+|2008|       9.6%         |         72.9%         |       17.5%       |  100% |
+|2016|       4.5%         |         73.8%         |       21.6%       |  100% |
